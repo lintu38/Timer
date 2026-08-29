@@ -61,6 +61,18 @@
     gap: 24px;
   }
 
+  .lbl{ display:inline-flex; align-items:center; gap: 6px; }
+  .lbl svg{
+    width: 13px; height: 13px;
+    flex: 0 0 auto;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 1.5;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    opacity: 0.65;
+  }
+
   /* ---------- Header ---------- */
   .head-block{
     display:flex;
@@ -835,6 +847,15 @@
   }
 
   /* ---------- Settings ---------- */
+  .goal-row{
+    display:grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+  }
+  .goal-row .settings{ padding: 12px 13px; }
+  .goal-row .settings span{ white-space: nowrap; }
+  .goal-row .settings input{ width: 52px; }
+
   .settings{
     display:flex; align-items:center; justify-content:space-between;
     background: var(--bg-card);
@@ -967,6 +988,18 @@
   const app = document.getElementById('app');
 
   /* ---------------- helpers ---------------- */
+
+  // Small line icons for section labels.
+  const ICON = {
+    flag:  '<svg viewBox="0 0 16 16"><path d="M4 14.5V2.5"/><path d="M4 3h8.5l-2.2 3 2.2 3H4"/></svg>',
+    target:'<svg viewBox="0 0 16 16"><circle cx="8" cy="8" r="6"/><circle cx="8" cy="8" r="2.6"/></svg>',
+    clock: '<svg viewBox="0 0 16 16"><circle cx="8" cy="8" r="6"/><path d="M8 4.6V8l2.4 1.6"/></svg>',
+    stack: '<svg viewBox="0 0 16 16"><path d="M8 2.5 14 6l-6 3.5L2 6z"/><path d="M2.6 9.4 8 12.5l5.4-3.1"/></svg>',
+    bars:  '<svg viewBox="0 0 16 16"><path d="M3 13V9"/><path d="M8 13V4"/><path d="M13 13v-6"/></svg>',
+    star:  '<svg viewBox="0 0 16 16"><path d="M8 2.4l1.7 3.6 3.9.5-2.9 2.7.8 3.9L8 11.2l-3.5 1.9.8-3.9L2.4 6.5l3.9-.5z"/></svg>',
+    sound: '<svg viewBox="0 0 16 16"><path d="M3.5 6h2.2L9.5 3v10L5.7 10H3.5z"/><path d="M11.8 6.2a3.6 3.6 0 0 1 0 3.6"/></svg>'
+  };
+
 
   // Task types are editable. `id` never changes, so old records keep their colour
   // and grouping even after a label is renamed.
@@ -1985,21 +2018,36 @@
         ${banner ? banner.text : '&nbsp;'}
       </div>
 
+      <div class="goal-row">
+        <div class="settings">
+          <span class="lbl">${ICON.flag}First-move</span>
+          <div style="display:flex; align-items:center; gap:6px;">
+            <input type="number" id="startGoalInput" min="1" max="60" value="${Math.round(data.thresholdSec/60)}"> min
+          </div>
+        </div>
+        <div class="settings">
+          <span class="lbl">${ICON.target}Goal</span>
+          <div style="display:flex; align-items:center; gap:6px;">
+            <input type="number" id="workGoalInput" min="1" max="1440" value="${Math.round(data.workGoalSec/60)}"> min
+          </div>
+        </div>
+      </div>
+
       <div class="stats-grid">
         <div class="stat-card">
-          <div class="stat-label">Today's work</div>
+          <div class="stat-label lbl">${ICON.clock}Today's work</div>
           <div class="stat-value cyan">${stats.todayWork > 0 ? fmtElapsed(stats.todayWork) : '—'}</div>
         </div>
         <div class="stat-card">
-          <div class="stat-label">Sessions today</div>
+          <div class="stat-label lbl">${ICON.stack}Sessions today</div>
           <div class="stat-value">${stats.sessionCount || '—'}</div>
         </div>
         <div class="stat-card">
-          <div class="stat-label">Today's average start</div>
+          <div class="stat-label lbl">${ICON.bars}Today's average start</div>
           <div class="stat-value">${stats.todayAvg != null ? fmtElapsed(stats.todayAvg) : '—'}</div>
         </div>
         <div class="stat-card">
-          <div class="stat-label">Best start ever</div>
+          <div class="stat-label lbl">${ICON.star}Best start ever</div>
           <div class="stat-value accent">${stats.allFastest != null ? fmtElapsed(stats.allFastest) : '—'}</div>
         </div>
       </div>
@@ -2046,21 +2094,7 @@
       </div>
 
       <div class="settings">
-        <span>First-move</span>
-        <div style="display:flex; align-items:center; gap:6px;">
-          <input type="number" id="startGoalInput" min="1" max="60" value="${Math.round(data.thresholdSec/60)}"> min
-        </div>
-      </div>
-
-      <div class="settings">
-        <span>Goal</span>
-        <div style="display:flex; align-items:center; gap:6px;">
-          <input type="number" id="workGoalInput" min="1" max="1440" value="${Math.round(data.workGoalSec/60)}"> min
-        </div>
-      </div>
-
-      <div class="settings">
-        <span>Sound</span>
+        <span class="lbl">${ICON.sound}Sound</span>
         <button class="toggle ${data.soundOn === false ? '' : 'on'}" id="soundToggle">
           ${data.soundOn === false ? 'OFF' : 'ON'}
         </button>
