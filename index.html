@@ -855,6 +855,8 @@
   .goal-row .settings{ padding: 12px 13px; }
   .goal-row .settings span{ white-space: nowrap; }
   .goal-row .settings input{ width: 52px; }
+  /* the session goal can run to three digits, so give it room */
+  .goal-row .settings input#workGoalInput{ width: 68px; }
 
   .settings{
     display:flex; align-items:center; justify-content:space-between;
@@ -2014,10 +2016,6 @@
 
       ${renderWeekPaws()}
 
-      <div class="result ${banner ? 'show' : ''} ${banner && banner.celebrate ? 'celebrate' : ''}">
-        ${banner ? banner.text : '&nbsp;'}
-      </div>
-
       <div class="goal-row">
         <div class="settings">
           <span class="lbl">${ICON.flag}First-move</span>
@@ -2031,6 +2029,18 @@
             <input type="number" id="workGoalInput" min="1" max="1440" value="${Math.round(data.workGoalSec/60)}"> min
           </div>
         </div>
+      </div>
+
+      <div class="settings">
+        <span class="lbl">${ICON.sound}Sound</span>
+        <button class="toggle ${data.soundOn === false ? '' : 'on'}" id="soundToggle">
+          ${data.soundOn === false ? 'OFF' : 'ON'}
+        </button>
+      </div>
+
+
+      <div class="result ${banner ? 'show' : ''} ${banner && banner.celebrate ? 'celebrate' : ''}">
+        ${banner ? banner.text : '&nbsp;'}
       </div>
 
       <div class="stats-grid">
@@ -2093,12 +2103,7 @@
         `).join('')}</div>` : `<div class="empty-state">No sessions yet. Press READY... when you're about to begin.</div>`}
       </div>
 
-      <div class="settings">
-        <span class="lbl">${ICON.sound}Sound</span>
-        <button class="toggle ${data.soundOn === false ? '' : 'on'}" id="soundToggle">
-          ${data.soundOn === false ? 'OFF' : 'ON'}
-        </button>
-      </div>
+
     `;
 
     bind('readyBtn', onReady);
