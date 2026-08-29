@@ -62,6 +62,13 @@
   }
 
   /* ---------- Header ---------- */
+  .head-block{
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    gap: 15px;
+    margin-bottom: 16px;
+  }
   .eyebrow{
     display:flex;
     align-items:center;
@@ -82,19 +89,19 @@
     font-family: 'Gaegu', 'Zen Kaku Gothic New', cursive;
     font-size: 36px;
     font-weight: 700;
-    margin: 4px 0 0;
+    margin: 0;
     letter-spacing: 0.01em;
-    line-height: 1.25;
+    line-height: 1.2;
     color: #7C6247;
   }
-  .paw-mark{ display:flex; justify-content:center; margin-top: 10px; }
+  .paw-mark{ display:flex; justify-content:center; margin-top: 0; }
   .paw-mark svg{ width: 32px; height: 27px; fill: #C7AC87; opacity: 0.85; }
   .sub{
     text-align:center;
     color: var(--text-muted);
     font-size: 13.5px;
-    margin-top: 8px;
-    line-height:1.6;
+    margin-top: 0;
+    line-height:1.5;
   }
 
   /* ---------- task type ---------- */
@@ -373,6 +380,7 @@
     justify-content:center;
     align-items:center;
     min-height: 168px;
+    margin-top: -22px;
   }
   .btn-row{
     display:flex;
@@ -400,7 +408,22 @@
   }
   .action-btn{ display:inline-flex; align-items:center; justify-content:center; gap: 9px; }
   .btn-paw{ width: 19px; height: 16px; fill: currentColor; opacity: 0.9; flex: 0 0 auto; }
-  .action-btn:active{ transform: scale(0.97); }
+  .action-btn:active{ transform: scale(0.97); animation: none; }
+  /* a slow, soft glow — far gentler than the GO! pulse */
+  .action-btn{ animation: readyBreath 4.2s ease-in-out infinite; }
+  @keyframes readyBreath{
+    0%,100%{
+      box-shadow: 0 8px 20px -8px rgba(183, 154, 115, 0.55);
+      filter: brightness(1);
+    }
+    50%{
+      box-shadow: 0 10px 26px -8px rgba(183, 154, 115, 0.8);
+      filter: brightness(1.06);
+    }
+  }
+  @media (prefers-reduced-motion: reduce){
+    .action-btn{ animation: none; }
+  }
 
   .pill{
     appearance:none;
@@ -490,6 +513,51 @@
   @media (prefers-reduced-motion: reduce){
     .halo{ animation: none; opacity: 0.22; }
     .checkin-btn{ animation: none; }
+  }
+
+  /* ---------- week of paws ---------- */
+  .week-paws{
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    gap: 10px;
+    margin-top: -8px;
+  }
+  .week-paw svg{
+    width: 32px;              /* same as the paw under the title */
+    height: 27px;
+    fill: none;
+    stroke: #C7AC87;           /* every empty paw is the same beige */
+    stroke-width: 0.7;
+    transition: fill 0.5s ease;
+  }
+  /* stamped once the day's goal is met — the outline disappears into the fill */
+  .week-paw.on svg{ fill: currentColor; stroke: none; }
+  .week-paw.today svg{ stroke-width: 1.3; }
+  .week-paw.today.on svg{ stroke: none; }
+  .week-paw{
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    gap: 3px;
+  }
+  .week-paw .wd{
+    font-family:'Space Mono', monospace;
+    font-size: 9.5px;
+    font-weight: 400;
+    letter-spacing: 0.06em;
+    color: #C7AC87;
+  }
+  .week-paw.today .wd{ color: #A8977F; }
+  .week-paw.stamp svg{ animation: pawStamp 0.55s cubic-bezier(0.2, 1.5, 0.35, 1); }
+  @keyframes pawStamp{
+    0%{ transform: scale(1.9) rotate(-12deg); opacity: 0; }
+    45%{ transform: scale(0.88) rotate(2deg); opacity: 1; }
+    70%{ transform: scale(1.06) rotate(0deg); }
+    100%{ transform: scale(1) rotate(0deg); }
+  }
+  @media (prefers-reduced-motion: reduce){
+    .week-paw.stamp svg{ animation: none; }
   }
 
   /* ---------- Session summary card ---------- */
@@ -700,6 +768,33 @@
   }
 
   /* ---------- History ---------- */
+  .hist-toggle{
+    appearance:none; border:none; background:none; cursor:pointer;
+    display:flex; align-items:center; gap: 7px;
+    padding: 2px 4px 2px 0;
+    font-family: inherit;
+    font-size: 13px;
+    color: var(--text-muted);
+    letter-spacing: 0.04em;
+  }
+  .hist-toggle:hover{ color: var(--text); }
+  .hist-toggle .caret{
+    display:inline-block;
+    font-size: 10px;
+    transition: transform 0.2s ease;
+    color: var(--text-faint);
+  }
+  .hist-toggle.open .caret{ transform: rotate(90deg); }
+  .hist-count{
+    font-family:'Space Mono', monospace;
+    font-size: 10.5px;
+    color: var(--text-faint);
+    background: var(--bg-card);
+    border: 1px solid var(--ring-track);
+    border-radius: 999px;
+    padding: 1px 7px;
+  }
+
   .section-title{
     display:flex; align-items:center; justify-content:space-between;
     font-size: 13px; color: var(--text-muted);
@@ -856,8 +951,8 @@
     breakAccum: 0,
     hoursChimed: 0,
     goalCelebrated: false,
-    thresholdSec: 180,      // goal for getting started
-    workGoalSec: 1500,      // goal for the work session
+    thresholdSec: 300,      // goal for getting started (5 min)
+    workGoalSec: 10800,     // goal for the work session (3 h)
     soundOn: true,
     taskType: 'WORK',
     types: null,
@@ -1078,29 +1173,77 @@
     }
   }
 
+  // The same rounded voice as the arrival fanfare, just fewer notes.
+
+  // Bright single note the moment you commit to starting.
+  function playReadyTone(){
+    if(data.soundOn === false) return;
+    const ctx = ensureAudio(); if(!ctx) return;
+    const t = ctx.currentTime + 0.02;
+    playNote(ctx, 880.0, t, 1.6, 0.055);            // A5
+    playNote(ctx, 1318.5, t + 0.06, 1.2, 0.022);    // E6 shimmer above it
+  }
+
+  // Small cues for pausing, resuming and wrapping up.
+  function playPause(){
+    if(data.soundOn === false) return;
+    const ctx = ensureAudio(); if(!ctx) return;
+    const t = ctx.currentTime + 0.02;
+    playNote(ctx, 987.77, t, 1.3, 0.05);            // B5
+    playNote(ctx, 659.25, t + 0.16, 1.9, 0.05);     // down to E5
+    playNote(ctx, 329.63, t + 0.16, 2.0, 0.022);    // E4 underneath
+  }
+  function playResume(){
+    if(data.soundOn === false) return;
+    const ctx = ensureAudio(); if(!ctx) return;
+    const t = ctx.currentTime + 0.02;
+    playNote(ctx, 659.25, t, 1.3, 0.05);            // E5
+    playNote(ctx, 987.77, t + 0.16, 2.0, 0.05);     // up to B5
+    playNote(ctx, 1318.5, t + 0.16, 1.4, 0.02);     // a little shimmer
+  }
+  // A bright little rise to close the session out.
+  function playClose(){
+    if(data.soundOn === false) return;
+    const ctx = ensureAudio(); if(!ctx) return;
+    const t = ctx.currentTime + 0.03;
+    playNote(ctx, 659.25, t, 1.5, 0.05);            // E5
+    playNote(ctx, 783.99, t + 0.16, 1.9, 0.052);    // G5
+    playNote(ctx, 1046.5, t + 0.32, 2.6, 0.05);     // C6, left ringing
+    playNote(ctx, 523.25, t + 0.32, 2.8, 0.03);     // C5 underneath for body
+    playNote(ctx, 1567.98, t + 0.52, 1.6, 0.018);   // faint sparkle on top
+  }
+
   // Repeating nudge while you still haven't started.
+  // It quickens as the goal approaches, then settles once it has passed.
   let reminderHandle = null;
-  let reminderMode = null;
-  const REMINDER_BEFORE_MS = 3000;
-  const REMINDER_AFTER_MS = 2000;
+  let reminderPeriod = null;
+
+  // Only the spacing changes with time — the note itself stays the same.
+  function nudgePlan(remaining){
+    if(remaining <= 0)  return { ms: 3000 };   // past the goal
+    if(remaining <= 5)  return { ms: 1000 };   // final seconds
+    if(remaining <= 30) return { ms: 2000 };
+    if(remaining <= 60) return { ms: 3000 };
+    return                     { ms: 5000 };   // early on
+  }
 
   function playReminderNote(){
     // Only ever nudges while you still haven't started.
     if(data.phase !== 'ready'){ stopReminder(); return; }
     if(data.soundOn === false) return;
     const ctx = ensureAudio(); if(!ctx) return;
-    playNote(ctx, 784.0, ctx.currentTime + 0.02, 1.5, 0.055);
+    playNote(ctx, 784.0, ctx.currentTime + 0.02, 1.5, 0.055);   // G5
   }
-  function startReminder(mode){
-    if(reminderMode === mode && reminderHandle) return;
+
+  function startReminder(ms){
+    if(reminderPeriod === ms && reminderHandle) return;   // already at this tempo
     stopReminder();
-    reminderMode = mode;
-    reminderHandle = setInterval(playReminderNote,
-      mode === 'overtime' ? REMINDER_AFTER_MS : REMINDER_BEFORE_MS);
+    reminderPeriod = ms;
+    reminderHandle = setInterval(playReminderNote, ms);
   }
   function stopReminder(){
     if(reminderHandle){ clearInterval(reminderHandle); reminderHandle = null; }
-    reminderMode = null;
+    reminderPeriod = null;
   }
 
   /* ---------------- colours ---------------- */
@@ -1598,11 +1741,84 @@
     render();
   }
 
+  // ---- the current week, one paw per day ----
+
+  // The day flips at 05:00, and the week starts Monday at 05:00 —
+  // so a late night still counts towards the day it started in.
+  const DAY_FLIP_HOUR = 5;
+
+  function dayStart5(when){
+    const x = new Date(when);
+    if(x.getHours() < DAY_FLIP_HOUR) x.setDate(x.getDate() - 1);
+    x.setHours(DAY_FLIP_HOUR, 0, 0, 0);
+    return x;
+  }
+  function weekStart5(when){
+    const x = dayStart5(when);
+    const wd = (x.getDay() + 6) % 7;      // 0 = Monday
+    x.setDate(x.getDate() - wd);
+    return x;
+  }
+
+  function weekPaws(){
+    const currentDay = dayStart5(new Date());
+    const monday = weekStart5(new Date());
+    const letters = ['M','T','W','T','F','S','S'];
+    // Mon → Sun, each with its own muted shade
+    const colors  = ['#A8C075','#C9913F','#7FAEBE','#C7929F','#D3BA55','#6B84AE','#AB5F63'];
+    const out = [];
+    for(let i = 0; i < 7; i++){
+      const d = new Date(monday); d.setDate(d.getDate() + i);
+      const next = new Date(d); next.setDate(next.getDate() + 1);
+      let total = 0;
+      (data.sessions || []).forEach(s => {
+        if(s.ts >= d.getTime() && s.ts < next.getTime()) total += s.work || 0;
+      });
+      out.push({
+        date: d,
+        letter: letters[i],
+        color: colors[i],
+        total: total,
+        met: total >= data.workGoalSec,
+        today: d.getTime() === currentDay.getTime()
+      });
+    }
+    return out;
+  }
+
+  const PAW_PATHS = `
+    <ellipse cx="20" cy="25" rx="8.6" ry="7"/>
+    <ellipse cx="9.5" cy="14.5" rx="4" ry="5.2" transform="rotate(-18 9.5 14.5)"/>
+    <ellipse cx="16.5" cy="8" rx="3.7" ry="5"/>
+    <ellipse cx="24.5" cy="8" rx="3.7" ry="5"/>
+    <ellipse cx="31" cy="14.5" rx="4" ry="5.2" transform="rotate(18 31 14.5)"/>`;
+
+  let stampedDays = null;   // days already stamped in this view, so it animates once
+
+  function renderWeekPaws(){
+    const days = weekPaws();
+    const metKeys = days.filter(d => d.met).map(d => d.date.getTime());
+    const firstPass = stampedDays === null;
+    const fresh = firstPass ? [] : metKeys.filter(k => !stampedDays.includes(k));
+    stampedDays = metKeys;
+    return `<div class="week-paws">
+      ${days.map(d => `
+        <div class="week-paw ${d.met ? 'on' : ''} ${fresh.includes(d.date.getTime()) ? 'stamp' : ''} ${d.today ? 'today' : ''}"
+             style="color:${d.color}"
+             title="${d.letter} ${(d.date.getMonth()+1)}/${d.date.getDate()} · ${d.total > 0 ? fmtElapsed(d.total) : 'no sessions'}">
+          <svg viewBox="0 0 40 34" aria-hidden="true">${PAW_PATHS}</svg>
+          <span class="wd">${d.letter}</span>
+        </div>
+      `).join('')}
+    </div>`;
+  }
+
   /* ---------------- render ---------------- */
 
   let banner = null;   // { text, celebrate }
   let typeEditing = false;
   let editIndex = null;   // session index being edited, or 'new'
+  let historyOpen = false;   // History starts collapsed
 
   function dialState(){
     const phase = data.phase;
@@ -1624,7 +1840,7 @@
       const p = w / data.workGoalSec;
       return {
         main: fmtElapsed(w),
-        label: phase === 'break' ? 'on a break' : 'working',
+        label: phase === 'break' ? 'on a break' : 'in session',
         progress: ((p % 1) + 1) % 1,
         raw: p,
         color: typeColor(data.taskType || 'WORK'),
@@ -1706,7 +1922,7 @@
       .slice(0, 12);
 
     app.innerHTML = `
-      <div class="eyebrow"><span class="dot"></span>Time Log</div>
+      <div class="head-block">
       <h1>Ready When You Are</h1>
       <div class="paw-mark">
         <svg viewBox="0 0 40 34" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
@@ -1717,7 +1933,8 @@
           <ellipse cx="31" cy="14.5" rx="4" ry="5.2" transform="rotate(18 31 14.5)"/>
         </svg>
       </div>
-      <div class="sub">Measuring your time to first action.</div>
+      <div class="sub">From the first move to the finish, let's time it.</div>
+      </div>
 
       <div class="type-row">
         ${typeList().map(t => `
@@ -1762,6 +1979,8 @@
 
       <div class="btn-slot">${buttonMarkup()}</div>
 
+      ${renderWeekPaws()}
+
       <div class="result ${banner ? 'show' : ''} ${banner && banner.celebrate ? 'celebrate' : ''}">
         ${banner ? banner.text : '&nbsp;'}
       </div>
@@ -1795,15 +2014,18 @@
 
       <div>
         <div class="section-title">
-          <span>History</span>
+          <button class="hist-toggle ${historyOpen ? 'open' : ''}" id="histToggle">
+            <span class="caret">▸</span>History
+            ${sessions.length ? `<span class="hist-count">${(data.sessions || []).length}</span>` : ''}
+          </button>
           <span class="tools">
             <button class="add-btn" id="addSession">+ ADD</button>
-            ${sessions.length ? '<button class="reset-btn" id="clearBtn">clear all</button>' : ''}
+            ${historyOpen && sessions.length ? '<button class="reset-btn" id="clearBtn">clear all</button>' : ''}
           </span>
         </div>
         <div style="height:8px"></div>
-        ${renderSessionEditor()}
-        ${sessions.length ? `<div class="log-list">${sessions.map(({ s, i }) => `
+        ${historyOpen ? renderSessionEditor() : ''}
+        ${!historyOpen ? '' : sessions.length ? `<div class="log-list">${sessions.map(({ s, i }) => `
           <div class="log-item" data-sess="${i}" title="タップして編集">
             <div class="left">
               ${(() => {
@@ -1824,21 +2046,21 @@
       </div>
 
       <div class="settings">
-        <span>First-move goal</span>
+        <span>First-move</span>
         <div style="display:flex; align-items:center; gap:6px;">
           <input type="number" id="startGoalInput" min="1" max="60" value="${Math.round(data.thresholdSec/60)}"> min
         </div>
       </div>
 
       <div class="settings">
-        <span>Goal line</span>
+        <span>Goal</span>
         <div style="display:flex; align-items:center; gap:6px;">
-          <input type="number" id="workGoalInput" min="1" max="600" value="${Math.round(data.workGoalSec/60)}"> min
+          <input type="number" id="workGoalInput" min="1" max="1440" value="${Math.round(data.workGoalSec/60)}"> min
         </div>
       </div>
 
       <div class="settings">
-        <span>Chime &amp; nudges</span>
+        <span>Sound</span>
         <button class="toggle ${data.soundOn === false ? '' : 'on'}" id="soundToggle">
           ${data.soundOn === false ? 'OFF' : 'ON'}
         </button>
@@ -1862,7 +2084,8 @@
       b.addEventListener('click', () => onTypeChange(b.dataset.type));
     });
     bind('typeEdit', () => { typeEditing = !typeEditing; render(); });
-    bind('addSession', () => { editIndex = 'new'; render(); });
+    bind('histToggle', () => { historyOpen = !historyOpen; render(); });
+    bind('addSession', () => { editIndex = 'new'; historyOpen = true; render(); });
     bind('seSave', onSessionSave);
     bind('seDel', onSessionDelete);
     bind('seCancel', () => { editIndex = null; render(); });
@@ -1926,13 +2149,8 @@
 
     if(phase === 'ready'){
       const remaining = data.thresholdSec - readyElapsed();
-      const warnAt = Math.min(60, data.thresholdSec / 2);
-      if(!warned && remaining <= warnAt && remaining > 0){
-        warned = true;
-        playChime();
-        startReminder('warning');
-      }
-      if(remaining <= 0 && data.soundOn !== false) startReminder('overtime');
+      // Same note throughout — only the spacing tightens as the goal nears.
+      if(data.soundOn !== false) startReminder(nudgePlan(remaining).ms);
 
       const go = goButtonStyle(readyElapsed() / data.thresholdSec);
       const goBtn = document.getElementById('goBtn');
@@ -2022,8 +2240,10 @@
 
   async function onReady(){
     ensureAudio();
+    playReadyTone();
     warned = false;
     stopReminder();
+    if(data.soundOn !== false) startReminder(nudgePlan(data.thresholdSec).ms);
     banner = null;
     data.phase = 'ready';
     data.readyStart = Date.now();
@@ -2065,7 +2285,8 @@
     data.workStart = null;
     data.breakStart = Date.now();
     data.phase = 'break';
-    banner = { text: 'On a break. The work clock is paused.', celebrate: false };
+    playPause();
+    banner = { text: 'On a break. The clock is paused.', celebrate: false };
     await saveData();
     render();
   }
@@ -2075,6 +2296,7 @@
     data.breakStart = null;
     data.workStart = Date.now();
     data.phase = 'working';
+    playResume();
     banner = null;
     await saveData();
     render();
@@ -2104,6 +2326,7 @@
     data.phase = 'done';
     stopTicking();
     stopReminder();
+    playClose();
     banner = null;
     await saveData();
     render();
@@ -2215,7 +2438,7 @@
   async function onWorkGoalChange(e){
     let v = parseInt(e.target.value, 10);
     if(isNaN(v) || v < 1) v = 1;
-    if(v > 600) v = 600;
+    if(v > 1440) v = 1440;
     data.workGoalSec = v * 60;
     await saveData();
     render();
