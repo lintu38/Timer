@@ -14,7 +14,7 @@
 <title>Ready When You Are</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Gaegu:wght@400;700&family=Space+Mono:wght@400;700&family=Zen+Kaku+Gothic+New:wght@400;500;700;900&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Comfortaa:wght@500;600;700&family=Space+Mono:wght@400;700&family=Zen+Kaku+Gothic+New:wght@400;500;700;900&display=swap" rel="stylesheet">
 <style>
   :root{
     --bg: #FAF6EF;
@@ -98,9 +98,9 @@
   }
   h1{
     text-align:center;
-    font-family: 'Gaegu', 'Zen Kaku Gothic New', cursive;
-    font-size: 36px;
-    font-weight: 700;
+    font-family: 'Comfortaa', 'Zen Kaku Gothic New', cursive;
+    font-size: 27px;
+    font-weight: 600;
     margin: 0;
     letter-spacing: 0.01em;
     line-height: 1.2;
@@ -587,6 +587,24 @@
     .season{ display: none; }
   }
 
+  /* a quiet word of encouragement while you work */
+  .cheer{
+    text-align:center;
+    font-size: 13px;
+    color: var(--text-muted);
+    letter-spacing: 0.01em;
+    min-height: 18px;
+    margin-top: -14px;
+    animation: cheerIn 0.8s ease-out;
+  }
+  @keyframes cheerIn{
+    from{ opacity: 0; transform: translateY(4px); }
+    to{   opacity: 1; transform: none; }
+  }
+  @media (prefers-reduced-motion: reduce){
+    .cheer{ animation: none; }
+  }
+
   /* ---------- Buttons ---------- */
   .btn-slot{
     display:flex;
@@ -653,7 +671,9 @@
   }
   .pill:active{ transform: scale(0.97); }
   .pill .lbl{ justify-content:center; gap: 7px; }
-  .pill .lbl svg{ width: 15px; height: 15px; opacity: 0.8; }
+  .pill .lbl svg{ width: 15px; height: 15px; opacity: 0.85; }
+  .pill .lbl svg[viewBox="0 0 20 16"]{ width: 19px; }
+  .pill .lbl svg ellipse{ fill: currentColor; stroke: none; }
   .pill.primary{
     border: none;
     color: #FFFDF7;
@@ -719,6 +739,10 @@
     animation: beckon 2.2s ease-in-out infinite;
     transition: transform 0.1s ease, background 0.6s ease, box-shadow 0.6s ease;
   }
+  .checkin-btn{ display:flex; flex-direction:column; align-items:center; justify-content:center; gap: 2px; }
+  .go-steps{ display:block; line-height: 0; }
+  .go-steps svg{ width: 30px; height: 24px; }
+  .go-steps svg ellipse{ fill: #FFE08A; opacity: 0.85; }
   .checkin-btn:active{ transform: scale(0.94); animation: none; }
   @keyframes beckon{
     0%,100%{ transform: scale(1); }
@@ -1156,6 +1180,35 @@
     .confetti, .goal-flash, .ring-fill.flash{ animation: none; }
   }
 
+  /* ---------- backup ---------- */
+  .backup-row{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap: 10px;
+    padding: 0 4px;
+  }
+  .backup-row .hint{
+    font-size: 11px;
+    color: var(--text-faint);
+    line-height: 1.5;
+  }
+  .backup-btns{ display:flex; gap: 6px; flex: 0 0 auto; }
+  .backup-btns button{
+    appearance:none; cursor:pointer;
+    border: 1px solid var(--ring-track);
+    background: var(--bg-card);
+    color: var(--text-muted);
+    border-radius: 9px;
+    padding: 7px 12px;
+    font-family:'Space Mono', monospace;
+    font-size: 10.5px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    transition: background 0.15s ease, color 0.15s ease;
+  }
+  .backup-btns button:hover{ background: var(--bg-card-hover); color: var(--text); }
+
   .loading{ text-align:center; color: var(--text-faint); font-size: 13px; padding: 40px 0; }
   ::-webkit-scrollbar{ width:5px; }
   ::-webkit-scrollbar-thumb{ background: #DDD3C4; border-radius:4px; }
@@ -1209,6 +1262,8 @@
     bars:  '<svg viewBox="0 0 16 16"><path d="M3 13V9"/><path d="M8 13V4"/><path d="M13 13v-6"/></svg>',
     star:  '<svg viewBox="0 0 16 16"><path d="M8 2.4l1.7 3.6 3.9.5-2.9 2.7.8 3.9L8 11.2l-3.5 1.9.8-3.9L2.4 6.5l3.9-.5z"/></svg>',
     sound: '<svg viewBox="0 0 16 16"><path d="M3.5 6h2.2L9.5 3v10L5.7 10H3.5z"/><path d="M11.8 6.2a3.6 3.6 0 0 1 0 3.6"/></svg>',
+    finish:'<svg viewBox="0 0 16 16"><path d="M4 14V2.4"/><path d="M4 3.2h8.4l-2.1 2.9 2.1 2.9H4"/><path d="M2.6 14h4"/></svg>',
+    steps: '<svg viewBox="0 0 20 16"><g opacity="0.55" transform="translate(0.5,4.5) scale(0.36)"><ellipse cx="20" cy="25" rx="8.6" ry="7"/><ellipse cx="9.5" cy="14.5" rx="4" ry="5.2" transform="rotate(-18 9.5 14.5)"/><ellipse cx="16.5" cy="8" rx="3.7" ry="5"/><ellipse cx="24.5" cy="8" rx="3.7" ry="5"/><ellipse cx="31" cy="14.5" rx="4" ry="5.2" transform="rotate(18 31 14.5)"/></g><g transform="translate(9,0.5) scale(0.42)"><ellipse cx="20" cy="25" rx="8.6" ry="7"/><ellipse cx="9.5" cy="14.5" rx="4" ry="5.2" transform="rotate(-18 9.5 14.5)"/><ellipse cx="16.5" cy="8" rx="3.7" ry="5"/><ellipse cx="24.5" cy="8" rx="3.7" ry="5"/><ellipse cx="31" cy="14.5" rx="4" ry="5.2" transform="rotate(18 31 14.5)"/></g></svg>',
     coffee:'<svg viewBox="0 0 16 16"><path d="M2.8 6h8.4v3.4a3 3 0 0 1-3 3H5.8a3 3 0 0 1-3-3z"/><path d="M11.2 6.8h1.3a1.6 1.6 0 0 1 0 3.2h-1.3"/><path d="M5.4 3.6c.5.6.5 1.1 0 1.7M8 3.2c.5.6.5 1.1 0 1.7"/></svg>'
   };
 
@@ -1691,6 +1746,43 @@
 
   function positionWalker(p){
     placeOnRing(document.getElementById('walker'), p);
+  }
+
+  // ---- small encouragements, one every few minutes ----
+  const CHEERS = [
+    "Nice and steady.",
+    "You're doing the thing.",
+    "Still here. That counts.",
+    "One more stretch.",
+    "The hard part is behind you.",
+    "Keep going, gently.",
+    "Good pace.",
+    "No rush. Just keep at it.",
+    "You showed up, which is most of it.",
+    "Little by little.",
+    "This is what progress looks like.",
+    "Stay with it.",
+    "Slow is fine.",
+    "Every minute counts.",
+    "Look at you go.",
+    "Still moving forward.",
+    "The dog believes in you.",
+    "Doing fine, honestly.",
+    "Worth it already.",
+    "Halfway is a place too."
+  ];
+
+  let cheerText = null;
+  let cheerSlot = -1;
+
+  function pickCheer(){
+    let next = cheerText;
+    if(CHEERS.length > 1){
+      while(next === cheerText) next = CHEERS[Math.floor(Math.random() * CHEERS.length)];
+    } else {
+      next = CHEERS[0];
+    }
+    cheerText = next;
   }
 
   // ---- the pack: one puppy per completed hour ----
@@ -2370,21 +2462,21 @@
         <span class="halo" style="border-color:${go.halo}"></span>
         <span class="halo d2" style="border-color:${go.halo}"></span>
         <span class="halo d3" style="border-color:${go.halo}"></span>
-        <button class="checkin-btn" id="goBtn" style="background:${go.background}; box-shadow:${go.shadow}">GO!</button>
+        <button class="checkin-btn" id="goBtn" style="background:${go.background}; box-shadow:${go.shadow}">GO!<span class="go-steps">${ICON.steps}</span></button>
       </div>`;
     }
     if(phase === 'working'){
       return `<div class="btn-row">
         <button class="pill quiet" id="breakBtn"><span class="lbl">${ICON.coffee}BREAK</span></button>
-        <button class="pill beige" id="finishBtn">FINISH</button>
+        <button class="pill beige" id="finishBtn"><span class="lbl">${ICON.finish}FINISH</span></button>
       </div>`;
     }
     if(phase === 'break'){
       const tid = data.taskType || 'WORK';
       return `<div class="btn-row">
         <button class="pill primary" id="restartBtn"
-                style="background:${typeGradient(tid)}; box-shadow:0 8px 20px -9px ${typeDeep(tid)}">RESTART</button>
-        <button class="pill beige" id="finishBtn">FINISH</button>
+                style="background:${typeGradient(tid)}; box-shadow:0 8px 20px -9px ${typeDeep(tid)}"><span class="lbl">${ICON.steps}ReSTART</span></button>
+        <button class="pill beige" id="finishBtn"><span class="lbl">${ICON.finish}FINISH</span></button>
       </div>`;
     }
     // done
@@ -2480,6 +2572,8 @@
         ${renderBreakButterflies()}
       </div>
 
+      ${data.phase === 'working' && cheerText ? `<div class="cheer" id="cheer">${cheerText}</div>` : ''}
+
       <div class="btn-slot">${buttonMarkup()}</div>
 
       ${renderWeekPaws()}
@@ -2573,6 +2667,15 @@
       </div>
 
 
+
+      <div class="backup-row">
+        <span class="hint">記録はこの端末のブラウザにだけ保存されます。<br>ときどき書き出して保管しておくと安心です。</span>
+        <span class="backup-btns">
+          <button id="exportBtn" title="記録をファイルに書き出す">EXPORT</button>
+          <button id="importBtn" title="書き出したファイルを読み込む">IMPORT</button>
+        </span>
+        <input type="file" id="importFile" accept="application/json,.json" style="display:none">
+      </div>
     `;
 
     bind('readyBtn', onReady);
@@ -2583,6 +2686,13 @@
     bind('doneReset', onDoneReset);
     bind('clearBtn', onClearAll);
     bind('soundToggle', onSoundToggle);
+    bind('exportBtn', exportData);
+    bind('importBtn', () => { const f = document.getElementById('importFile'); if(f) f.click(); });
+    const imp = document.getElementById('importFile');
+    if(imp) imp.addEventListener('change', e => {
+      if(e.target.files && e.target.files[0]) importData(e.target.files[0]);
+      e.target.value = '';
+    });
     app.querySelectorAll('.mode-btn').forEach(b => {
       b.addEventListener('click', () => onChartMode(b.dataset.mode));
     });
@@ -2711,6 +2821,21 @@
         releaseButterfly();
       }
 
+      // a new line of encouragement on the same beat
+      if(flights !== cheerSlot){
+        cheerSlot = flights;
+        pickCheer();
+        const el = document.getElementById('cheer');
+        if(el){
+          el.textContent = cheerText;
+          el.style.animation = 'none';
+          void el.offsetWidth;
+          el.style.animation = '';
+        } else {
+          render();
+        }
+      }
+
       seasonalTick();
 
       // Lap badge appears as laps accumulate
@@ -2764,6 +2889,79 @@
     }
   }
 
+  // ---- backup: write the whole log to a file, and read it back ----
+
+  function exportData(){
+    const payload = {
+      app: 'ready-when-you-are',
+      version: 1,
+      exportedAt: new Date().toISOString(),
+      data: data
+    };
+    const blob = new Blob([JSON.stringify(payload, null, 2)], { type: 'application/json' });
+    const d = new Date();
+    const stamp = d.getFullYear() + pad2(d.getMonth()+1) + pad2(d.getDate());
+    const a = document.createElement('a');
+    a.href = URL.createObjectURL(blob);
+    a.download = `timelog-${stamp}.json`;
+    document.body.appendChild(a);
+    a.click();
+    setTimeout(() => { URL.revokeObjectURL(a.href); a.remove(); }, 1000);
+  }
+
+  function importData(file){
+    const reader = new FileReader();
+    reader.onload = async () => {
+      let incoming;
+      try{
+        const parsed = JSON.parse(reader.result);
+        incoming = parsed && parsed.data ? parsed.data : parsed;
+      } catch(e){
+        alert('このファイルは読み込めませんでした。');
+        return;
+      }
+      if(!incoming || !Array.isArray(incoming.sessions)){
+        alert('記録が見つかりませんでした。');
+        return;
+      }
+
+      const mine = (data.sessions || []).length;
+      const theirs = incoming.sessions.length;
+      const merge = mine > 0
+        ? confirm(`読み込むファイルには ${theirs} 件の記録があります。\n\nOK: いまの ${mine} 件と統合する\nキャンセル: いまの記録を捨てて置き換える`)
+        : false;
+
+      if(merge){
+        // same timestamp and length means the same session
+        const seen = new Set((data.sessions || []).map(s => s.ts + ':' + Math.round(s.work || 0)));
+        (incoming.sessions || []).forEach(s => {
+          const key = s.ts + ':' + Math.round(s.work || 0);
+          if(!seen.has(key)){ data.sessions.push(s); seen.add(key); }
+        });
+        const seenLogs = new Set((data.logs || []).map(l => l.ts + ':' + Math.round(l.elapsed || 0)));
+        (incoming.logs || []).forEach(l => {
+          const key = l.ts + ':' + Math.round(l.elapsed || 0);
+          if(!seenLogs.has(key)){ data.logs.push(l); seenLogs.add(key); }
+        });
+        data.sessions.sort((a, b) => a.ts - b.ts);
+        data.logs.sort((a, b) => a.ts - b.ts);
+      } else {
+        // keep the current session state, take everything else
+        const live = {
+          phase: data.phase, readyStart: data.readyStart, initialElapsed: data.initialElapsed,
+          workStart: data.workStart, workAccum: data.workAccum, typeAccum: data.typeAccum,
+          breakStart: data.breakStart, breakAccum: data.breakAccum
+        };
+        data = Object.assign({}, DEFAULT_DATA, incoming, live);
+      }
+
+      await saveData();
+      render();
+      alert('読み込みました。');
+    };
+    reader.readAsText(file);
+  }
+
   /* ---------------- actions ---------------- */
 
   async function onReady(){
@@ -2798,6 +2996,8 @@
     data.logs.push({ ts: Date.now(), elapsed });
     data.phase = 'working';
     data.workStart = Date.now();
+    cheerSlot = 0;
+    pickCheer();
     stopReminder();
     playGoTone();
     if(fast) playFanfare();
@@ -2854,6 +3054,8 @@
     data.breakAccum = rest;
     data.breakStart = null;
     data.phase = 'done';
+    cheerText = null;
+    cheerSlot = -1;
     stopTicking();
     stopReminder();
     playClose();
