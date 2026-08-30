@@ -172,6 +172,60 @@
     color: #FFFDF7;
   }
 
+  .te-icon{
+    appearance:none; cursor:pointer;
+    width: 30px; height: 30px;
+    flex: 0 0 auto;
+    border: 1px solid var(--ring-track);
+    border-radius: 8px;
+    background: var(--bg);
+    display:flex; align-items:center; justify-content:center;
+    padding: 0;
+  }
+  .te-icon svg{
+    width: 16px; height: 16px;
+    fill: none; stroke: var(--text-muted);
+    stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round;
+  }
+  .te-icon:hover{ background: var(--bg-card-hover); }
+  .icon-grid{
+    display:grid;
+    grid-template-columns: repeat(6, 1fr);
+    gap: 6px;
+    padding: 8px;
+    background: var(--bg);
+    border: 1px solid var(--ring-track);
+    border-radius: 10px;
+  }
+  .icon-grid button{
+    appearance:none; cursor:pointer;
+    border: 1px solid transparent;
+    background: var(--bg-card);
+    border-radius: 8px;
+    padding: 6px;
+    display:flex; align-items:center; justify-content:center;
+  }
+  .icon-grid button svg{
+    width: 16px; height: 16px;
+    fill: none; stroke: var(--text-muted);
+    stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round;
+  }
+  .icon-grid button:hover{ background: var(--bg-card-hover); }
+  .icon-grid button.on{ border-color: var(--beige-deep); background: var(--bg-card-hover); }
+
+  .type-badge{
+    display:flex;
+    margin-bottom: 2px;
+  }
+  .type-badge svg{
+    width: 24px; height: 24px;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 1.4;
+    stroke-linecap: round; stroke-linejoin: round;
+    opacity: 0.9;
+  }
+
   .type-edit-btn{
     appearance:none; cursor:pointer;
     border: 1px dashed var(--ring-track);
@@ -312,6 +366,19 @@
     color: var(--text-muted);
     letter-spacing: 0.1em;
   }
+  .break-cup{
+    display:flex;
+    margin-bottom: 2px;
+  }
+  .break-cup svg{
+    width: 26px; height: 26px;
+    fill: none;
+    stroke: var(--text-muted);
+    stroke-width: 1.3;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    opacity: 0.8;
+  }
   .lap-badge{
     font-family:'Space Mono', monospace;
     font-size: 11px;
@@ -386,6 +453,140 @@
     .glow{ animation: none; }
   }
 
+  /* a puppy joins the walk for every full hour */
+  .pup{
+    width: 20px;
+    height: 20px;
+    margin-left: -10px;
+    margin-top: -10px;
+    opacity: 0.94;
+    animation: pupJoin 0.6s cubic-bezier(0.2, 1.4, 0.35, 1);
+  }
+  .pup.p2{ width: 18px; height: 18px; margin-left: -9px; margin-top: -9px; }
+  .pup.p3{ width: 16px; height: 16px; margin-left: -8px; margin-top: -8px; }
+
+  /* three coats, picked at random when a puppy joins */
+  .pup.coat-beige .dog-body{ fill: #C6A97F; }
+  .pup.coat-beige .dog-dark{ fill: #A98B5F; }
+  .pup.coat-beige .dog-light{ fill: #E2D0B2; }
+  .pup.coat-black .dog-body{ fill: #4C4239; }
+  .pup.coat-black .dog-dark{ fill: #332C25; }
+  .pup.coat-black .dog-light{ fill: #7A6E62; }
+  .pup.coat-brown .dog-body{ fill: #8A6C4F; }
+  .pup.coat-brown .dog-dark{ fill: #6E5339; }
+  .pup.coat-brown .dog-light{ fill: #C7AC87; }
+  @keyframes pupJoin{
+    0%{ opacity: 0; transform-box: fill-box; }
+    100%{ opacity: 0.92; }
+  }
+
+  /* a butterfly every five minutes */
+  .butterfly{
+    position:absolute;
+    left: 0; top: 0;
+    width: 12px; height: 10px;
+    margin-left: -6px;
+    margin-top: -5px;
+    pointer-events:none;
+    z-index: 4;
+    animation: flit 6.5s ease-out forwards;
+  }
+  .butterfly .wing{
+    animation: flap 0.16s ease-in-out infinite alternate;
+    transform-origin: 50% 50%;
+  }
+  @keyframes flap{
+    from{ transform: scaleX(1); }
+    to{ transform: scaleX(0.35); }
+  }
+  @keyframes flit{
+    0%{   opacity: 0; transform: translate(var(--x), var(--y)) scale(0.5) rotate(0deg); }
+    12%{  opacity: 1; }
+    35%{  transform: translate(calc(var(--x) + var(--dx) * 0.35), calc(var(--y) + var(--dy) * 0.5)) scale(1) rotate(8deg); }
+    65%{  transform: translate(calc(var(--x) + var(--dx) * 0.7), calc(var(--y) + var(--dy) * 0.25)) scale(1) rotate(-6deg); }
+    88%{  opacity: 1; }
+    100%{ opacity: 0; transform: translate(calc(var(--x) + var(--dx)), calc(var(--y) + var(--dy))) scale(0.9) rotate(4deg); }
+  }
+  @media (prefers-reduced-motion: reduce){
+    .butterfly{ display: none; }
+    .pup{ animation: none; }
+  }
+
+  .bird .wing-u{ animation: beat 0.34s ease-in-out infinite alternate; transform-origin: 50% 60%; }
+  @keyframes beat{
+    from{ transform: translateY(0) scaleY(1); }
+    to{   transform: translateY(-2px) scaleY(0.55); }
+  }
+  @keyframes glide{
+    0%{   opacity: 0; transform: translate(var(--x), var(--y)) scale(0.5); }
+    12%{  opacity: 1; }
+    50%{  transform: translate(calc(var(--x) + var(--dx) * 0.5), calc(var(--y) + var(--dy) * 0.65)) scale(1); }
+    88%{  opacity: 1; }
+    100%{ opacity: 0; transform: translate(calc(var(--x) + var(--dx)), calc(var(--y) + var(--dy))) scale(0.95); }
+  }
+
+  /* three butterflies circling the pack while it rests */
+  .bf-orbit{
+    position:absolute;
+    left: 0; top: 0;
+    width: 0; height: 0;
+    pointer-events:none;
+    z-index: 4;
+  }
+  .bf-arm{
+    position:absolute;
+    left: 0; top: 0;
+    animation: orbit var(--dur, 6s) linear infinite;
+    animation-delay: var(--delay, 0s);
+  }
+  .bf-rider{
+    position:absolute;
+    left: var(--r, 26px);
+    top: 0;
+    width: 12px; height: 10px;
+    margin-left: -6px;
+    margin-top: -5px;
+    animation: orbit var(--dur, 6s) linear infinite reverse;   /* stay upright */
+    animation-delay: var(--delay, 0s);
+  }
+  .bf-rider .wing{
+    animation: flap 0.16s ease-in-out infinite alternate;
+    transform-origin: 50% 50%;
+  }
+  @keyframes orbit{
+    from{ transform: rotate(0deg); }
+    to{   transform: rotate(360deg); }
+  }
+  @media (prefers-reduced-motion: reduce){
+    .bf-orbit{ display: none; }
+  }
+
+  /* whatever the season is doing outside */
+  .season{
+    position:absolute;
+    left: 0; top: 0;
+    pointer-events:none;
+    z-index: 1;
+  }
+  .season.drift{ animation: drift var(--life, 9s) linear forwards; }
+  @keyframes drift{
+    0%{   opacity: 0; transform: translate(var(--x), -24px) rotate(0deg); }
+    12%{  opacity: var(--peak, 0.85); }
+    50%{  transform: translate(calc(var(--x) + var(--sway)), 130px) rotate(200deg); }
+    85%{  opacity: var(--peak, 0.85); }
+    100%{ opacity: 0; transform: translate(var(--x), 300px) rotate(400deg); }
+  }
+  .season.streak{ animation: streak 1.9s cubic-bezier(0.3, 0.5, 0.6, 1) forwards; z-index: 3; }
+  @keyframes streak{
+    0%{   opacity: 0; transform: translate(var(--x), var(--y)) rotate(var(--ang)) scale(0.5); }
+    12%{  opacity: 1; }
+    70%{  opacity: 1; }
+    100%{ opacity: 0; transform: translate(calc(var(--x) + var(--dx)), calc(var(--y) + var(--dy))) rotate(var(--ang)) scale(1); }
+  }
+  @media (prefers-reduced-motion: reduce){
+    .season{ display: none; }
+  }
+
   /* ---------- Buttons ---------- */
   .btn-slot{
     display:flex;
@@ -451,6 +652,8 @@
     transition: transform 0.12s ease, background 0.2s ease;
   }
   .pill:active{ transform: scale(0.97); }
+  .pill .lbl{ justify-content:center; gap: 7px; }
+  .pill .lbl svg{ width: 15px; height: 15px; opacity: 0.8; }
   .pill.primary{
     border: none;
     color: #FFFDF7;
@@ -668,7 +871,13 @@
     font-variant-numeric: tabular-nums;
   }
   .stat-value.accent{ color: var(--gold); }
-  .stat-value.cyan{ color: var(--cyan-deep); }
+  .stat-sub{
+    font-family:'Space Mono', monospace;
+    font-size: 10.5px;
+    color: var(--text-faint);
+    margin-top: 2px;
+  }
+  .stat-value.cyan{ color: var(--beige-deep); }
 
   /* ---------- Chart ---------- */
   .chart-card{
@@ -883,7 +1092,7 @@
     font-size: 11.5px; font-weight: 700; letter-spacing: 0.1em;
     transition: background 0.2s ease, color 0.2s ease, border-color 0.2s ease;
   }
-  .toggle.on{ background: var(--cyan); border-color: var(--cyan-deep); color: #FFFDF7; }
+  .toggle.on{ background: var(--beige); border-color: var(--beige-deep); color: var(--beige-ink); }
 
   /* ---------- Celebration ---------- */
   .burst-layer{ position: fixed; inset: 0; pointer-events: none; z-index: 50; }
@@ -999,17 +1208,39 @@
     stack: '<svg viewBox="0 0 16 16"><path d="M8 2.5 14 6l-6 3.5L2 6z"/><path d="M2.6 9.4 8 12.5l5.4-3.1"/></svg>',
     bars:  '<svg viewBox="0 0 16 16"><path d="M3 13V9"/><path d="M8 13V4"/><path d="M13 13v-6"/></svg>',
     star:  '<svg viewBox="0 0 16 16"><path d="M8 2.4l1.7 3.6 3.9.5-2.9 2.7.8 3.9L8 11.2l-3.5 1.9.8-3.9L2.4 6.5l3.9-.5z"/></svg>',
-    sound: '<svg viewBox="0 0 16 16"><path d="M3.5 6h2.2L9.5 3v10L5.7 10H3.5z"/><path d="M11.8 6.2a3.6 3.6 0 0 1 0 3.6"/></svg>'
+    sound: '<svg viewBox="0 0 16 16"><path d="M3.5 6h2.2L9.5 3v10L5.7 10H3.5z"/><path d="M11.8 6.2a3.6 3.6 0 0 1 0 3.6"/></svg>',
+    coffee:'<svg viewBox="0 0 16 16"><path d="M2.8 6h8.4v3.4a3 3 0 0 1-3 3H5.8a3 3 0 0 1-3-3z"/><path d="M11.2 6.8h1.3a1.6 1.6 0 0 1 0 3.2h-1.3"/><path d="M5.4 3.6c.5.6.5 1.1 0 1.7M8 3.2c.5.6.5 1.1 0 1.7"/></svg>'
   };
 
+
+  // Icons a task type can wear. Shown in the dial while that type is running.
+  const TYPE_ICONS = {
+    briefcase:'<svg viewBox="0 0 16 16"><rect x="2" y="5" width="12" height="8.4" rx="1.6"/><path d="M6 5V3.8A1.2 1.2 0 0 1 7.2 2.6h1.6A1.2 1.2 0 0 1 10 3.8V5"/><path d="M2 8.6h12"/></svg>',
+    book:     '<svg viewBox="0 0 16 16"><path d="M2.4 3.2h4a2 2 0 0 1 1.6 1v8a2 2 0 0 0-1.6-.8h-4z"/><path d="M13.6 3.2h-4A2 2 0 0 0 8 4.2v8a2 2 0 0 1 1.6-.8h4z"/></svg>',
+    cap:      '<svg viewBox="0 0 16 16"><path d="M8 3 15 6.2 8 9.4 1 6.2z"/><path d="M4 7.6v3.2C4 12 6 13 8 13s4-1 4-2.2V7.6"/></svg>',
+    pencil:   '<svg viewBox="0 0 16 16"><path d="M11.4 2.6 13.4 4.6 5.6 12.4 2.6 13.4 3.6 10.4z"/><path d="M10 4l2 2"/></svg>',
+    laptop:   '<svg viewBox="0 0 16 16"><rect x="3" y="3.6" width="10" height="7" rx="1.2"/><path d="M1.6 12.6h12.8"/></svg>',
+    palette:  '<svg viewBox="0 0 16 16"><path d="M8 2.2a5.8 5.8 0 0 0 0 11.6c1 0 1.4-.7 1-1.4-.5-.9.1-1.8 1.1-1.8h1A2.9 2.9 0 0 0 14 7.6C13.7 4.5 11.1 2.2 8 2.2z"/><circle cx="5.6" cy="6.6" r="0.9"/><circle cx="8.4" cy="5.2" r="0.9"/></svg>',
+    note:     '<svg viewBox="0 0 16 16"><path d="M6 12V4.2l7-1.4V10"/><circle cx="4.4" cy="12.2" r="1.8"/><circle cx="11.4" cy="10.2" r="1.8"/></svg>',
+    dumbbell: '<svg viewBox="0 0 16 16"><path d="M4.6 5.4v5.2M2.6 6.6v2.8M11.4 5.4v5.2M13.4 6.6v2.8M4.6 8h6.8"/></svg>',
+    code:     '<svg viewBox="0 0 16 16"><path d="M5.6 4.8 2.4 8l3.2 3.2M10.4 4.8 13.6 8l-3.2 3.2"/></svg>',
+    leaf:     '<svg viewBox="0 0 16 16"><path d="M13 3c0 5.5-3 8.6-7.4 8.6-1 0-1.8-.2-2.4-.5C3.6 6.4 7.4 3.4 13 3z"/><path d="M3.2 13.2C5 10 7.6 7.8 10.6 6.4"/></svg>',
+    heart:    '<svg viewBox="0 0 16 16"><path d="M8 13.2 3.2 8.6a2.9 2.9 0 0 1 4.1-4.1L8 5.2l.7-.7a2.9 2.9 0 0 1 4.1 4.1z"/></svg>',
+    home:     '<svg viewBox="0 0 16 16"><path d="M2.6 7.4 8 2.8l5.4 4.6"/><path d="M4.2 8.4v4.8h7.6V8.4"/></svg>'
+  };
+  const ICON_KEYS = Object.keys(TYPE_ICONS);
+  function typeIcon(id){
+    const t = typeOf(id);
+    return TYPE_ICONS[t.icon] || TYPE_ICONS.briefcase;
+  }
 
   // Task types are editable. `id` never changes, so old records keep their colour
   // and grouping even after a label is renamed.
   const DEFAULT_TYPES = [
-    { id: 'WORK',  label: 'WORK',  color: '#46AFC2' },   // cyan
-    { id: 'READ',  label: 'READ',  color: '#C7929F' },   // dusty pink
-    { id: 'STUDY', label: 'STUDY', color: '#8FB4C4' },   // muted pale blue
-    { id: 'OTHER', label: 'OTHER', color: '#C7AC87' }    // beige
+    { id: 'WORK',  label: 'WORK',  color: '#46AFC2', icon: 'briefcase' },
+    { id: 'READ',  label: 'READ',  color: '#C7929F', icon: 'book' },
+    { id: 'STUDY', label: 'STUDY', color: '#8FB4C4', icon: 'cap' },
+    { id: 'OTHER', label: 'OTHER', color: '#C7AC87', icon: 'leaf' }
   ];
 
   function typeList(){
@@ -1447,8 +1678,7 @@
   const DIAL_R = 108;
   const FEET_OFFSET = 9;
 
-  function positionWalker(p){
-    const el = document.getElementById('walker');
+  function placeOnRing(el, p){
     if(!el) return;
     const t = ((p % 1) + 1) % 1;
     const angle = -Math.PI / 2 + t * Math.PI * 2;
@@ -1459,13 +1689,239 @@
     el.style.transform = `translate(${cx.toFixed(1)}px, ${cy.toFixed(1)}px) rotate(${spin.toFixed(1)}deg)`;
   }
 
+  function positionWalker(p){
+    placeOnRing(document.getElementById('walker'), p);
+  }
+
+  // ---- the pack: one puppy per completed hour ----
+  const MAX_PUPS = 5;
+  const PUP_TRAIL = 15;         // degrees each puppy trails the one ahead
+
+  function pupCount(){
+    if(data.phase !== 'working' && data.phase !== 'break') return 0;
+    return Math.min(Math.floor(workElapsed() / 3600), MAX_PUPS);
+  }
+
+  const COATS = ['coat-beige', 'coat-black', 'coat-brown'];
+  let pupCoats = [];
+  function coatFor(i){
+    while(pupCoats.length <= i){
+      pupCoats.push(COATS[Math.floor(Math.random() * COATS.length)]);
+    }
+    return pupCoats[i];
+  }
+
+  function renderPups(dogClass){
+    let out = '';
+    for(let i = 0; i < pupCount(); i++){
+      const size = i >= 4 ? 'p3' : i >= 2 ? 'p2' : '';
+      out += `<div class="walker pup ${size} ${coatFor(i)} ${dogClass}" data-pup="${i}">${DOG_SVG}</div>`;
+    }
+    return out;
+  }
+
+  // Place the dog and everyone following it.
+  function positionPack(p){
+    positionWalker(p);
+    placePoint(document.getElementById('bfOrbit'), p);
+    const trail = PUP_TRAIL / 360;
+    document.querySelectorAll('[data-pup]').forEach(el => {
+      const i = parseInt(el.dataset.pup, 10);
+      placeOnRing(el, p - trail * (i + 1));
+    });
+  }
+
+  // ---- butterflies, one every five minutes ----
+  // Yellow most of the time; blue is uncommon and white is rare.
+  const BF_COLORS = {
+    yellow: ['#F2D24B','#F7DF74','#EFC93B','#F5D95E'],
+    blue:   ['#6FA8DC','#8FC1E8','#5B93C7','#7FB4DE'],
+    white:  ['#F4F1EA','#FFFFFF','#E6E0D4','#F8F5EE']
+  };
+  function pickBfColor(){
+    const r = Math.random();
+    if(r < 0.04) return 'white';
+    if(r < 0.15) return 'blue';
+    return 'yellow';
+  }
+  function butterflySvg(kind){
+    const c = BF_COLORS[kind] || BF_COLORS.yellow;
+    return `
+    <svg viewBox="0 0 20 18" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+      <g class="wing">
+        <ellipse cx="6" cy="7" rx="4.6" ry="5.4" fill="${c[0]}" opacity="0.92"/>
+        <ellipse cx="14" cy="7" rx="4.6" ry="5.4" fill="${c[1]}" opacity="0.92"/>
+        <ellipse cx="6.6" cy="12.6" rx="3.2" ry="3.6" fill="${c[2]}" opacity="0.88"/>
+        <ellipse cx="13.4" cy="12.6" rx="3.2" ry="3.6" fill="${c[3]}" opacity="0.88"/>
+      </g>
+      <rect x="9.3" y="5" width="1.4" height="9" rx="0.7" fill="#8A6C4F"/>
+    </svg>`;
+  }
+
+  function releaseButterfly(){
+    if(window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    const dial = document.querySelector('.dial-wrap');
+    const dog = document.getElementById('walker');
+    if(!dial || !dog) return;
+
+    // start just beside the dog, then drift away
+    const p = ((workElapsed() / data.workGoalSec) % 1 + 1) % 1;
+    const angle = -Math.PI / 2 + p * Math.PI * 2;
+    const r = DIAL_R + FEET_OFFSET;
+    const x = DIAL_SIZE / 2 + Math.cos(angle) * r;
+    const y = DIAL_SIZE / 2 + Math.sin(angle) * r;
+
+    const b = document.createElement('div');
+    b.className = 'butterfly';
+    b.innerHTML = butterflySvg(pickBfColor());
+    b.style.setProperty('--x', x.toFixed(0) + 'px');
+    b.style.setProperty('--y', y.toFixed(0) + 'px');
+    b.style.setProperty('--dx', ((Math.random() - 0.5) * 70).toFixed(0) + 'px');
+    b.style.setProperty('--dy', (-30 - Math.random() * 45).toFixed(0) + 'px');
+    dial.appendChild(b);
+    setTimeout(() => b.remove(), 6800);
+  }
+
+  function flyerAt(){
+    const p = ((workElapsed() / data.workGoalSec) % 1 + 1) % 1;
+    const angle = -Math.PI / 2 + p * Math.PI * 2;
+    const r = DIAL_R + FEET_OFFSET;
+    return {
+      x: DIAL_SIZE / 2 + Math.cos(angle) * r,
+      y: DIAL_SIZE / 2 + Math.sin(angle) * r
+    };
+  }
+
+  // Three butterflies drift around the pack during a break.
+  function renderBreakButterflies(){
+    if(data.phase !== 'break') return '';
+    const specs = [
+      { r: 30, dur: 6.5, delay: 0, kind: 'yellow' }
+    ];
+    return `<div class="bf-orbit" id="bfOrbit">
+      ${specs.map(sp => `
+        <div class="bf-arm" style="--dur:${sp.dur}s; --delay:${sp.delay}s"></div>
+        <div class="bf-rider" style="--r:${sp.r}px; --dur:${sp.dur}s; --delay:${sp.delay}s">${butterflySvg(sp.kind)}</div>
+      `).join('')}
+    </div>`;
+  }
+
+  // Same spot as the dog, but without the ring rotation.
+  function placePoint(el, p){
+    if(!el) return;
+    const t = ((p % 1) + 1) % 1;
+    const a = -Math.PI / 2 + t * Math.PI * 2;
+    const r = DIAL_R + FEET_OFFSET;
+    const cx = DIAL_SIZE / 2 + Math.cos(a) * r;
+    const cy = DIAL_SIZE / 2 + Math.sin(a) * r;
+    el.style.left = cx.toFixed(1) + 'px';
+    el.style.top  = cy.toFixed(1) + 'px';
+  }
+
+  // ---- seasonal weather over the dial ----
+
+  function currentSeason(){
+    const m = new Date().getMonth() + 1;
+    if(m >= 3 && m <= 4)  return 'blossom';   // spring
+    if(m >= 5 && m <= 8)  return 'stars';     // summer nights
+    if(m >= 9 && m <= 11) return 'leaves';    // autumn
+    return 'snow';                            // winter
+  }
+
+  const SEASON_ART = {
+    blossom: () => {
+      const tint = ['#F3C6D2','#EFB6C6','#F8DCE4','#F5CBD8'][Math.floor(Math.random()*4)];
+      return `<svg viewBox="0 0 14 12"><path d="M7 1 C10.5 2, 13 5.5, 11.5 9 C8.5 11.5, 3.5 10.5, 1.8 7 C1.2 4, 3.5 1.4, 7 1z" fill="${tint}"/></svg>`;
+    },
+    leaves: () => {
+      const tint = ['#C96A3A','#D89A3C','#B14F35','#C98A12'][Math.floor(Math.random()*4)];
+      return `<svg viewBox="0 0 14 14"><path d="M7 0.8 8.9 4.4 12.8 3.6 10.4 6.8 13 9.6 9.2 9.9 8.3 13.4 7 10.6 5.7 13.4 4.8 9.9 1 9.6 3.6 6.8 1.2 3.6 5.1 4.4z" fill="${tint}"/></svg>`;
+    },
+    // a six-armed flake, tinted cool so it reads against the cream background
+    snow: () => `<svg viewBox="0 0 16 16">
+      <g stroke="#AFC9DC" stroke-width="1.5" stroke-linecap="round">
+        <path d="M8 1.6v12.8M2.5 4.8l11 6.4M13.5 4.8l-11 6.4"/>
+        <path d="M8 4.2 6.4 2.8M8 4.2 9.6 2.8M8 11.8 6.4 13.2M8 11.8 9.6 13.2"/>
+      </g>
+      <circle cx="8" cy="8" r="1.6" fill="#E8F2F8"/>
+    </svg>`,
+    stars: () => {
+      const id = 'sg' + Math.random().toString(36).slice(2, 7);
+      return `<svg viewBox="0 0 110 12">
+        <defs><linearGradient id="${id}" x1="0" x2="1">
+          <stop offset="0" stop-color="#F3D98C" stop-opacity="0"/>
+          <stop offset="0.65" stop-color="#F0CE6A" stop-opacity="0.55"/>
+          <stop offset="1" stop-color="#E8B93F" stop-opacity="0.95"/>
+        </linearGradient></defs>
+        <rect x="0" y="4.6" width="98" height="2.6" rx="1.3" fill="url(#${id})"/>
+        <circle cx="99" cy="5.9" r="4.4" fill="#F6E1A4"/>
+        <circle cx="99" cy="5.9" r="2.2" fill="#FFF6DD"/>
+      </svg>`;
+    }
+  };
+
+  let lastSeasonal = 0;
+  function spawnDrift(season, delay){
+    const dial = document.querySelector('.dial-wrap');
+    if(!dial) return;
+    const el = document.createElement('div');
+    el.innerHTML = SEASON_ART[season]();
+    el.className = 'season drift';
+    el.style.setProperty('--x', (-10 + Math.random() * (DIAL_SIZE + 20)).toFixed(0) + 'px');
+    el.style.setProperty('--sway', ((Math.random() - 0.5) * 70).toFixed(0) + 'px');
+    el.style.setProperty('--life', (7 + Math.random() * 5).toFixed(1) + 's');
+    el.style.setProperty('--peak', season === 'snow' ? '0.95' : '0.85');
+    el.style.animationDelay = delay.toFixed(2) + 's';
+    el.style.width = (season === 'snow' ? 11 : 12 + Math.random() * 4).toFixed(0) + 'px';
+    dial.appendChild(el);
+    setTimeout(() => el.remove(), 15000 + delay * 1000);
+  }
+
+  function spawnStreak(){
+    const dial = document.querySelector('.dial-wrap');
+    if(!dial) return;
+    const el = document.createElement('div');
+    el.innerHTML = SEASON_ART.stars();
+    el.className = 'season streak';
+    el.style.setProperty('--x', (-30 + Math.random() * 90).toFixed(0) + 'px');
+    el.style.setProperty('--y', (-10 + Math.random() * 110).toFixed(0) + 'px');
+    el.style.setProperty('--dx', (210 + Math.random() * 90).toFixed(0) + 'px');
+    el.style.setProperty('--dy', (120 + Math.random() * 80).toFixed(0) + 'px');
+    el.style.setProperty('--ang', (26 + Math.random() * 12).toFixed(0) + 'deg');
+    el.style.width = '110px';
+    dial.appendChild(el);
+    setTimeout(() => el.remove(), 2200);
+  }
+
+  function seasonalTick(){
+    if(data.phase !== 'working') return;
+    if(window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    const now = Date.now();
+    const season = currentSeason();
+
+    if(season === 'stars'){
+      if(now - lastSeasonal < 300000) return;            // about once every five minutes
+      lastSeasonal = now;
+      spawnStreak();
+      if(Math.random() < 0.15) setTimeout(spawnStreak, 800 + Math.random() * 600);
+      return;
+    }
+
+    // petals, leaves and snow come down in little flurries
+    if(now - lastSeasonal < 5200) return;
+    lastSeasonal = now;
+    const n = 3 + Math.floor(Math.random() * 4);          // 3–6 at a time
+    for(let i = 0; i < n; i++) spawnDrift(season, i * (0.25 + Math.random() * 0.5));
+  }
+
   /* ---------------- derived stats ---------------- */
 
   function computeStats(){
     const logs = data.logs || [];
     const todayLogs = logs.filter(l => isToday(l.ts));
     const todayAvg = todayLogs.length ? todayLogs.reduce((a,b)=>a+b.elapsed,0)/todayLogs.length : null;
-    const allFastest = logs.length ? Math.min(...logs.map(l=>l.elapsed)) : null;
+    let allFastest = null, bestTs = null;
+    logs.forEach(l => { if(allFastest === null || l.elapsed < allFastest){ allFastest = l.elapsed; bestTs = l.ts; } });
     const todaySessions = (data.sessions || []).filter(s => isToday(s.ts));
     const todayWork = todaySessions.reduce((a,b)=>a + (b.work || 0), 0);
     const byType = {};
@@ -1478,7 +1934,7 @@
     });
     const successCount = logs.filter(l => l.elapsed <= data.thresholdSec).length;
     const successRate = logs.length ? Math.round((successCount / logs.length) * 100) : null;
-    return { todayAvg, allFastest, todayWork, successRate, byType, sessionCount: todaySessions.length };
+    return { todayAvg, allFastest, bestTs, todayWork, successRate, byType, sessionCount: todaySessions.length };
   }
 
   // ---- history chart: day / week / month, pageable ----
@@ -1852,6 +2308,7 @@
 
   let banner = null;   // { text, celebrate }
   let typeEditing = false;
+  let iconPickerFor = null;
   let editIndex = null;   // session index being edited, or 'new'
   let historyOpen = false;   // History starts collapsed
 
@@ -1918,7 +2375,7 @@
     }
     if(phase === 'working'){
       return `<div class="btn-row">
-        <button class="pill quiet" id="breakBtn">BREAK</button>
+        <button class="pill quiet" id="breakBtn"><span class="lbl">${ICON.coffee}BREAK</span></button>
         <button class="pill beige" id="finishBtn">FINISH</button>
       </div>`;
     }
@@ -1985,9 +2442,13 @@
         ${typeList().map(t => `
           <div class="te-row">
             <input type="color" value="${t.color}" data-color="${t.id}">
+            <button class="te-icon" data-iconbtn="${t.id}" title="アイコンを選ぶ">${typeIcon(t.id)}</button>
             <input type="text" value="${t.label}" maxlength="12" data-label="${t.id}">
             <button class="te-del" data-del="${t.id}" ${typeList().length <= 1 ? 'disabled' : ''} title="削除">×</button>
           </div>
+          ${iconPickerFor === t.id ? `<div class="icon-grid">
+            ${ICON_KEYS.map(k => `<button data-seticon="${t.id}" data-key="${k}" class="${t.icon === k ? 'on' : ''}">${TYPE_ICONS[k]}</button>`).join('')}
+          </div>` : ''}
         `).join('')}
         <button class="te-add" id="typeAdd">+ ADD TYPE</button>
         <div class="te-note">名前を変えても、過去の記録はそのまま残ります。削除した種類の記録も消えません。</div>
@@ -1997,19 +2458,26 @@
         <div class="glow ${st.live ? 'running' : ''}" style="background: radial-gradient(circle, ${st.color} 0%, transparent 70%)"></div>
         <svg class="ring" width="260" height="260" viewBox="0 0 260 260">
           <circle class="ring-track" cx="130" cy="130" r="108" fill="none" stroke-width="8"/>
-          <circle class="ring-fill ${data.phase === 'break' ? 'paused' : ''} ${data.phase === 'ready' ? 'ccw' : ''}"
+          <circle class="ring-fill ${data.phase === 'break' ? 'paused' : ''}"
                   cx="130" cy="130" r="108" fill="none" stroke-width="8"
                   stroke="${st.color}"
                   stroke-dasharray="${circumference}"
                   stroke-dashoffset="${dashoffset}"/>
         </svg>
         <div class="dial-center">
+          ${data.phase === 'break'
+              ? `<div class="break-cup">${ICON.coffee}</div>`
+              : (data.phase === 'working'
+                  ? `<div class="type-badge" style="color:${typeColor(data.taskType)}">${typeIcon(data.taskType)}</div>`
+                  : '')}
           <div class="time-display">${st.main}</div>
           <div class="state-label">${st.label}</div>
           ${st.lap > 0 ? `<div class="lap-badge">lap ${st.lap + 1}</div>` : ''}
           ${st.sub ? `<div class="sub-clock">${st.sub}</div>` : ''}
         </div>
         <div class="walker ${st.dogClass}" id="walker">${DOG_SVG}</div>
+        ${renderPups(st.dogClass)}
+        ${renderBreakButterflies()}
       </div>
 
       <div class="btn-slot">${buttonMarkup()}</div>
@@ -2045,7 +2513,7 @@
 
       <div class="stats-grid">
         <div class="stat-card">
-          <div class="stat-label lbl">${ICON.clock}Today's work</div>
+          <div class="stat-label lbl">${ICON.clock}Today's total</div>
           <div class="stat-value cyan">${stats.todayWork > 0 ? fmtElapsed(stats.todayWork) : '—'}</div>
         </div>
         <div class="stat-card">
@@ -2059,6 +2527,7 @@
         <div class="stat-card">
           <div class="stat-label lbl">${ICON.star}Best start ever</div>
           <div class="stat-value accent">${stats.allFastest != null ? fmtElapsed(stats.allFastest) : '—'}</div>
+          ${stats.bestTs ? `<div class="stat-sub">${new Date(stats.bestTs).getFullYear()}/${new Date(stats.bestTs).getMonth()+1}/${new Date(stats.bestTs).getDate()}</div>` : ''}
         </div>
       </div>
 
@@ -2142,6 +2611,15 @@
     app.querySelectorAll('[data-label]').forEach(i => {
       i.addEventListener('change', () => onTypeEdit(i.dataset.label, { label: i.value }));
     });
+    app.querySelectorAll('[data-iconbtn]').forEach(b => {
+      b.addEventListener('click', () => {
+        iconPickerFor = iconPickerFor === b.dataset.iconbtn ? null : b.dataset.iconbtn;
+        render();
+      });
+    });
+    app.querySelectorAll('[data-seticon]').forEach(b => {
+      b.addEventListener('click', () => onTypeEdit(b.dataset.seticon, { icon: b.dataset.key }));
+    });
     app.querySelectorAll('[data-del]').forEach(b => {
       b.addEventListener('click', () => onTypeDelete(b.dataset.del));
     });
@@ -2150,7 +2628,7 @@
     const wg = document.getElementById('workGoalInput');
     if(wg) wg.addEventListener('change', onWorkGoalChange);
 
-    positionWalker(st.dogPos);
+    positionPack(st.dogPos);
     broadcastStatus();
   }
 
@@ -2162,6 +2640,7 @@
   /* ---------------- tick ---------------- */
 
   let warned = false;
+  let butterfliesSeen = 0;
 
   function tick(){
     const phase = data.phase;
@@ -2203,7 +2682,7 @@
     }
 
     if(phase === 'working'){
-      positionWalker(st.dogPos);
+      positionPack(st.dogPos);
 
       // Reaching the session goal
       if(!data.goalCelebrated && workElapsed() >= data.workGoalSec){
@@ -2216,13 +2695,23 @@
         return;
       }
 
-      // Hour marks: one bell per hour elapsed
+      // Hour marks: one bell per hour, and a new puppy joins the walk
       const hours = Math.floor(workElapsed() / 3600);
       if(hours > (data.hoursChimed || 0)){
         data.hoursChimed = hours;
         playHourBell(hours);
         saveData();
+        if(hours <= MAX_PUPS){ render(); return; }   // redraw so the puppy appears
       }
+
+      // A butterfly drifts past every five minutes
+      const flights = Math.floor(workElapsed() / 180);   // one every 3 minutes
+      if(flights > butterfliesSeen){
+        butterfliesSeen = flights;
+        releaseButterfly();
+      }
+
+      seasonalTick();
 
       // Lap badge appears as laps accumulate
       const badge = document.querySelector('.lap-badge');
@@ -2281,6 +2770,8 @@
     ensureAudio();
     playReadyTone();
     warned = false;
+    butterfliesSeen = 0;
+    pupCoats = [];
     stopReminder();
     if(data.soundOn !== false) startReminder(nudgePlan(data.thresholdSec).ms);
     banner = null;
@@ -2426,6 +2917,7 @@
       t.label = v || t.id;
     }
     if(patch.color !== undefined) t.color = patch.color;
+    if(patch.icon !== undefined){ t.icon = patch.icon; iconPickerFor = null; }
     await saveData();
     render();
   }
@@ -2437,7 +2929,8 @@
     list.push({
       id: 't' + Date.now().toString(36),
       label: 'NEW',
-      color: palette[list.length % palette.length]
+      color: palette[list.length % palette.length],
+      icon: 'leaf'
     });
     await saveData();
     render();
@@ -2496,6 +2989,7 @@
   async function init(){
     if(EMBEDDED) document.body.classList.add('embedded');
     await loadData();
+    butterfliesSeen = Math.floor(workElapsed() / 180);
     if(data.phase === 'ready' || data.phase === 'working' || data.phase === 'break') startTicking();
     startStatus();
     render();
